@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Prix positif -->
+    <xs:simpleType name="PriceType">
+        <xs:restriction base="xs:decimal">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Calories entre 100 et 2000 -->
+    <xs:simpleType name="CaloriesType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="100"/>
+            <xs:maxInclusive value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Type sweet/salty -->
+    <xs:simpleType name="FoodType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="sweet"/>
+            <xs:enumeration value="salty"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="breakfast_menu">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="food" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+
+                            <xs:element name="name" type="xs:string"/>
+
+                            <xs:element name="type"
+                                        type="FoodType"/>
+
+                            <xs:element name="price">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="PriceType">
+                                            <xs:attribute
+                                                name="unit"
+                                                type="xs:string"
+                                                use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+
+                            <xs:element name="calories"
+                                        type="CaloriesType"/>
+
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
